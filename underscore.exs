@@ -22,7 +22,7 @@ defmodule Underscore do
      [1,2,3]
   """
 
-  def first(list, n) when is_number(n) do
+  def first(list, n) do
     do_first list, n - 1
   end
 
@@ -30,11 +30,11 @@ defmodule Underscore do
     do_first list
   end
 
-  defp do_first(list, n) when list == [] do
+  defp do_first([], n) do
     nil
   end
 
-  defp do_first([head | tail], n) when n <= 0 do
+  defp do_first([head | tail], 0) do
     [head]
   end
 
@@ -42,7 +42,7 @@ defmodule Underscore do
     [head] ++ do_first tail, n - 1
   end
 
-  defp do_first(list) when list == [] do
+  defp do_first([]) do
     nil
   end
 
@@ -70,11 +70,11 @@ defmodule Underscore do
     do_initial list
   end
 
-  defp do_initial(list, n) when list == [] do
+  defp do_initial([], n) do
     nil
   end
 
-  defp do_initial(list, n) when n <= 0 do
+  defp do_initial(list, 0) do
     list
   end
 
@@ -83,7 +83,7 @@ defmodule Underscore do
     do_initial reverse(tail), n - 1
   end
 
-  defp do_initial(list) when list == [] do
+  defp do_initial([]) do
     nil
   end
 
@@ -112,20 +112,19 @@ defmodule Underscore do
     do_rest list
   end
 
-  defp do_rest(list, n) when list == [] do
+  defp do_rest([], n) do
     nil
   end
 
-  defp do_rest(list, n) when n <= 0 do
+  defp do_rest(list, 0) do
     list
   end
 
-  defp do_rest(list, n) do
-    [head | tail] = list
+  defp do_rest([head | tail], n) do
     do_rest tail, n - 1
   end
 
-  defp do_rest(list) when list == [] do
+  defp do_rest([]) do
     nil
   end
 
@@ -140,25 +139,23 @@ defmodule Underscore do
 
   ## Examples
 
-     iex> Underscore.compact([1,2, false, '', nil, 3])
-     [1,2,'',3]
-     iex> Underscore.rest([1,2,3,4], 2)
-     [3,4]
+     iex> Underscore.compact([1,2, false, "", nil, 3])
+     [1,2,"",3]
   """
 
   def compact(list) do
     do_compact list
   end
 
-  defp do_compact(base, [head | tail]) when tail == [] do
+  defp do_compact(base, [head | []]) do
     base ++ [head]
   end
 
-  defp do_compact(base, [head | tail]) when head == :false do
+  defp do_compact(base, [:false | tail]) do
     do_compact(base, tail)
   end
 
-  defp do_compact(base, [head | tail]) when head == :nil do
+  defp do_compact(base, [:nil | tail]) do
     do_compact(base, tail)
   end
 
@@ -184,7 +181,7 @@ defmodule Underscore do
     do_reverse list
   end
 
-  defp do_reverse(base, list) when list == [] do
+  defp do_reverse(base, []) do
     base
   end
 
@@ -192,8 +189,8 @@ defmodule Underscore do
     do_reverse [head] ++ base, tail
   end
 
-  defp do_reverse(list) when list == [] do
-    list
+  defp do_reverse([]) do
+    []
   end
 
   defp do_reverse([head | tail]) do
@@ -213,21 +210,12 @@ defmodule Underscore do
     do_length list
   end
 
-  defp do_length(list, counter) when list == [] do
-    counter
-  end
-
-  defp do_length([head | tail], counter) do
-    do_length tail, counter + 1
-  end
-
-  defp do_length(list) when list == [] do
+  defp do_length([]) do
     0
   end
 
   defp do_length([head | tail]) do
-    counter = 0
-    do_length tail, counter + 1
+    1 + do_length tail
   end
 
 end
