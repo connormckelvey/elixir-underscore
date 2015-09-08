@@ -243,4 +243,19 @@ defmodule Underscore do
     [head]
   end
 
+  def without(list, remove) do
+    do_without list, remove
+  end
+
+  defp do_without(list, remove) do
+    do_without list -- remove, list, remove
+  end
+
+  defp do_without(list, original, remove) when list === original do
+    list
+  end
+
+  defp do_without(list, original, remove) do
+    do_without(list -- remove, list, remove)
+  end
 end
