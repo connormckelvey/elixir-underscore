@@ -218,4 +218,29 @@ defmodule Underscore do
     1 + do_length tail
   end
 
+  @doc """
+  Returns a flattened list
+
+  ## Examples
+
+     iex> Underscore.flatten([1,2, [2, [4,5,6]]])
+     [1,2,3,4,5,6]
+  """
+
+  def flatten(list) do
+    do_flatten(list)
+  end
+
+  defp do_flatten([]) do
+     []
+  end
+
+  defp do_flatten([head | tail]) do
+    flatten(head) ++ flatten(tail)
+  end
+
+  defp do_flatten(head) do
+    [head]
+  end
+
 end
