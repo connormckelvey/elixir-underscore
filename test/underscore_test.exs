@@ -95,4 +95,14 @@ defmodule UnderscoreTest do
     result = Underscore.without([1,1,2,2,3,3,4,4], [1,2,3])
     assert [4,4] = result
   end
+
+  test "index_of/2" do
+    result = Underscore.index_of([1,2,3,4,5], 2)
+    assert 1 = result
+  end
+  
+  test "index_of/2" do
+    result = Underscore.index_of(["test", "ing", "one", 2, :foo], "test");
+    assert 0
+  end
 end

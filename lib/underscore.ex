@@ -134,7 +134,7 @@ defmodule Underscore do
   end
 
   @doc """
-  eturns a copy of the array with all falsy values removed. In Elixir,
+  Returns a copy of the array with all falsy values removed. In Elixir,
   only nil and false are falsey.
 
   ## Examples
@@ -243,6 +243,15 @@ defmodule Underscore do
     [head]
   end
 
+  @doc """
+  Returns a copy of the array with all instances of the values removed.
+
+  ## Examples
+
+     iex> Underscore.without([1,1,2,2,3,3,4,4], [1,2,3])
+     [4,4]
+  """
+
   def without(list, remove) do
     do_without list, remove
   end
@@ -257,5 +266,25 @@ defmodule Underscore do
 
   defp do_without(list, original, remove) do
     do_without(list -- remove, list, remove)
+  end
+
+  def index_of(list, search) do
+    do_index_of list, search
+  end
+
+  defp do_index_of([head | tail], search) when head == search do
+    0
+  end
+
+  defp do_index_of([head | tail], search, n) when head == search do
+    n
+  end
+
+  defp do_index_of([head | tail], search) do
+    do_index_of tail, search, 1
+  end
+
+  defp do_index_of([head | tail], search, n) do
+    do_index_of tail, search, n + 1
   end
 end
